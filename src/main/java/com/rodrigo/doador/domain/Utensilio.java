@@ -1,36 +1,39 @@
 package com.rodrigo.doador.domain;
 
 import java.io.Serializable;
-import java.util.ArrayList;
-import java.util.List;
 
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
-import javax.persistence.OneToMany;
+import javax.persistence.JoinColumn;
+import javax.persistence.ManyToOne;
 
 @Entity
-public class Pessoa implements Serializable {
+public class Utensilio implements Serializable {
 	private static final long serialVersionUID = 1L;
-
+	
 	@Id
 	@GeneratedValue(strategy=GenerationType.IDENTITY)
 	private Integer id;
 	private String nome;
-	private String email;
+	private String descricao;
+	private Boolean disponivel;
 	
-	@OneToMany(mappedBy="pessoa")
-	private List<Utensilio> utensilios = new ArrayList<>();
+	@ManyToOne
+	@JoinColumn(name="pessoa_id") // ID DA PESSOA DOADORA
+	private Pessoa pessoa;
 	
-	public Pessoa() {
+	public Utensilio() {
 	}
 
-	public Pessoa(Integer id, String nome, String email) {
+	public Utensilio(Integer id, String nome, String descricao, Pessoa pessoa, Boolean disponivel) {
 		super();
 		this.id = id;
 		this.nome = nome;
-		this.email = email;
+		this.descricao = descricao;
+		this.pessoa = pessoa;
+		this.setDisponivel(disponivel);
 	}
 
 	public Integer getId() {
@@ -49,20 +52,28 @@ public class Pessoa implements Serializable {
 		this.nome = nome;
 	}
 
-	public String getEmail() {
-		return email;
+	public String getDescricao() {
+		return descricao;
 	}
 
-	public void setEmail(String email) {
-		this.email = email;
+	public void setDescricao(String descricao) {
+		this.descricao = descricao;
 	}
 
-	public List<Utensilio> getUtensilios() {
-		return utensilios;
+	public Pessoa getPessoa() {
+		return pessoa;
 	}
 
-	public void setUtensilios(List<Utensilio> utensilios) {
-		this.utensilios = utensilios;
+	public void setPessoa(Pessoa pessoa) {
+		this.pessoa = pessoa;
+	}
+
+	public Boolean getDisponivel() {
+		return disponivel;
+	}
+
+	public void setDisponivel(Boolean disponivel) {
+		this.disponivel = disponivel;
 	}
 
 	@Override
@@ -81,7 +92,7 @@ public class Pessoa implements Serializable {
 			return false;
 		if (getClass() != obj.getClass())
 			return false;
-		Pessoa other = (Pessoa) obj;
+		Utensilio other = (Utensilio) obj;
 		if (id == null) {
 			if (other.id != null)
 				return false;
