@@ -27,4 +27,8 @@ public class PessoaService {
 		buscarPessoa(obj.getId());
 		return pessoaRepository.save(obj);
 	}
+	public void deletarPessoa(Integer id) {
+		buscarPessoa(id);
+		pessoaRepository.deleteById(id);
+	}
 }
