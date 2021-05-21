@@ -9,6 +9,7 @@ import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Sort.Direction;
 import org.springframework.stereotype.Service;
 
+import com.rodrigo.doador.DTO.PessoaDTO;
 import com.rodrigo.doador.domain.Pessoa;
 import com.rodrigo.doador.repositories.PessoaRepository;
 import com.rodrigo.doador.services.exceptions.DataIntegrityException;
@@ -44,5 +45,8 @@ public class PessoaService {
 	public Page<Pessoa> listarPessoas(Integer page, Integer linesPerPage, String orderBy, String direction){
 		PageRequest pageRequest = PageRequest.of(page, linesPerPage,Direction.valueOf(direction), orderBy);
 		return pessoaRepository.findAll(pageRequest);
+	}
+	public Pessoa converterDTO(PessoaDTO objDTO) {
+		return new Pessoa(objDTO.getId(), objDTO.getNome(), objDTO.getEmail());
 	}
 }

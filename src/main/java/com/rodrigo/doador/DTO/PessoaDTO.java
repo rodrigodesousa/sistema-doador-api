@@ -2,13 +2,24 @@ package com.rodrigo.doador.DTO;
 
 import java.io.Serializable;
 
+import javax.validation.constraints.Email;
+import javax.validation.constraints.NotEmpty;
+
+import org.hibernate.validator.constraints.Length;
+
 import com.rodrigo.doador.domain.Pessoa;
 
 public class PessoaDTO implements Serializable {
 	private static final long serialVersionUID = 1L;
 
 	private Integer id;
+	
+	@NotEmpty(message="Preenchimento obrigatório!")
+	@Length(min=5, max=80, message="O tamanho deve ser entre 5 e 80 caracteres")
 	private String nome;
+	
+	@NotEmpty(message="Preenchimento obrigatório!")
+	@Email(message="Email inválido!")
 	private String email;
 	
 	public PessoaDTO() {

@@ -2,6 +2,8 @@ package com.rodrigo.doador.resources;
 
 import java.net.URI;
 
+import javax.validation.Valid;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.http.ResponseEntity;
@@ -31,7 +33,8 @@ public class PessoaResource {
 	}
 	
 	@RequestMapping(method=RequestMethod.POST)
-	public ResponseEntity<Void> inserirPessoa(@RequestBody Pessoa obj){
+	public ResponseEntity<Void> inserirPessoa(@Valid @RequestBody PessoaDTO objDTO){
+		Pessoa obj = pessoaService.converterDTO(objDTO);
 		obj = pessoaService.inserirPessoa(obj);
 		URI uri = ServletUriComponentsBuilder.fromCurrentRequest()
 				.path("/{id}").buildAndExpand(obj.getId()).toUri();
@@ -39,7 +42,8 @@ public class PessoaResource {
 	}
 	
 	@RequestMapping(value="{id}", method=RequestMethod.PUT)
-	public ResponseEntity<Void> alterarPessoa(@RequestBody Pessoa obj, @PathVariable Integer id){
+	public ResponseEntity<Void> alterarPessoa(@Valid @RequestBody PessoaDTO objDTO, @PathVariable Integer id){
+		Pessoa obj = pessoaService.converterDTO(objDTO);
 		obj.setId(id);
 		obj = pessoaService.alterarPessoa(obj);
 		return ResponseEntity.noContent().build();
