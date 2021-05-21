@@ -23,4 +23,8 @@ public class PessoaService {
 		obj.setId(null);
 		return pessoaRepository.save(obj);
 	}
+	public Pessoa alterarPessoa(Pessoa obj) {
+		buscarPessoa(obj.getId());
+		return pessoaRepository.save(obj);
+	}
 }
