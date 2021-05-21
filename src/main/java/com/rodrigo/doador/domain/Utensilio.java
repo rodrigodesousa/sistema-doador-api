@@ -10,11 +10,6 @@ import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.validation.constraints.NotEmpty;
 
-import org.hibernate.validator.constraints.Length;
-
-import com.fasterxml.jackson.annotation.JsonBackReference;
-import com.fasterxml.jackson.annotation.JsonIgnore;
-
 @Entity
 public class Utensilio implements Serializable {
 	private static final long serialVersionUID = 1L;
