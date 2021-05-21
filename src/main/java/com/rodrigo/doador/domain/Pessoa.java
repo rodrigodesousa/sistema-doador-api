@@ -22,7 +22,6 @@ public class Pessoa implements Serializable {
 	private String nome;
 	private String email;
 	
-	@JsonManagedReference
 	@OneToMany(mappedBy="pessoa")
 	private List<Utensilio> utensilios = new ArrayList<>();
 	

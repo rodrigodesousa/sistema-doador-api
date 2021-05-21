@@ -19,4 +19,8 @@ public class PessoaService {
 		Optional<Pessoa> obj = pessoaRepository.findById(id);
 		return obj.orElseThrow(() -> new ObjectNotFoundException("Objeto não encontrado ID: " + id + " Tipo: " + Pessoa.class.getName()));
 	}
+	public Pessoa inserirPessoa(Pessoa obj) {
+		obj.setId(null);
+		return pessoaRepository.save(obj);
+	}
 }

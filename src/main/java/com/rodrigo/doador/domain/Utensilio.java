@@ -10,6 +10,7 @@ import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 
 import com.fasterxml.jackson.annotation.JsonBackReference;
+import com.fasterxml.jackson.annotation.JsonIgnore;
 
 @Entity
 public class Utensilio implements Serializable {
@@ -22,7 +23,7 @@ public class Utensilio implements Serializable {
 	private String descricao;
 	private Boolean disponivel;
 	
-	@JsonBackReference
+	@JsonIgnore
 	@ManyToOne
 	@JoinColumn(name="pessoa_id") // ID DA PESSOA DOADORA
 	private Pessoa pessoa;
