@@ -49,4 +49,8 @@ public class UtensilioService {
 		PageRequest pageRequest = PageRequest.of(page, linesPerPage,Direction.valueOf(direction), orderBy);
 		return utensilioRepository.findAll(pageRequest);
 	}
+	public Page<Utensilio> listarUtensiliosDisponiveis(Integer page, Integer linesPerPage, String orderBy, String direction){
+		PageRequest pageRequest = PageRequest.of(page, linesPerPage,Direction.valueOf(direction), orderBy);
+		return utensilioRepository.listarUtensiliosDisponiveis(pageRequest);
+	}
 }
