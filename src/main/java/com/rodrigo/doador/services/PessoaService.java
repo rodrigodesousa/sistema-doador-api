@@ -4,6 +4,9 @@ import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.dao.DataIntegrityViolationException;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Sort.Direction;
 import org.springframework.stereotype.Service;
 
 import com.rodrigo.doador.domain.Pessoa;
@@ -37,5 +40,9 @@ public class PessoaService {
 		catch (DataIntegrityViolationException e) {
 			throw new DataIntegrityException("Não é possivel excluir uma Pessoa que possui utensilios");
 		}
+	}
+	public Page<Pessoa> listarPessoas(Integer page, Integer linesPerPage, String orderBy, String direction){
+		PageRequest pageRequest = PageRequest.of(page, linesPerPage,Direction.valueOf(direction), orderBy);
+		return pessoaRepository.findAll(pageRequest);
 	}
 }

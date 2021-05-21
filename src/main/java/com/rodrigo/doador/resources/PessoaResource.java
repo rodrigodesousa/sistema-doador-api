@@ -3,14 +3,17 @@ package com.rodrigo.doador.resources;
 import java.net.URI;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 
+import com.rodrigo.doador.DTO.PessoaDTO;
 import com.rodrigo.doador.domain.Pessoa;
 import com.rodrigo.doador.services.PessoaService;
 
@@ -26,6 +29,7 @@ public class PessoaResource {
 		Pessoa obj = pessoaService.buscarPessoa(id);
 		return ResponseEntity.ok().body(obj);
 	}
+	
 	@RequestMapping(method=RequestMethod.POST)
 	public ResponseEntity<Void> inserirPessoa(@RequestBody Pessoa obj){
 		obj = pessoaService.inserirPessoa(obj);
@@ -33,17 +37,31 @@ public class PessoaResource {
 				.path("/{id}").buildAndExpand(obj.getId()).toUri();
 		return ResponseEntity.created(uri).build();
 	}
+	
 	@RequestMapping(value="{id}", method=RequestMethod.PUT)
 	public ResponseEntity<Void> alterarPessoa(@RequestBody Pessoa obj, @PathVariable Integer id){
 		obj.setId(id);
 		obj = pessoaService.alterarPessoa(obj);
 		return ResponseEntity.noContent().build();
 	}
+	
 	@RequestMapping(value="{id}", method=RequestMethod.DELETE)
 	public ResponseEntity<Void> deletarPessoa(@PathVariable Integer id) {
 		pessoaService.deletarPessoa(id);
 		
 		return ResponseEntity.noContent().build();
+	}
+	
+	@RequestMapping(method=RequestMethod.GET)
+	public ResponseEntity<Page<PessoaDTO>> listarPessoas(
+			@RequestParam(value="page", defaultValue="0") Integer page,
+			@RequestParam(value="linesPerPage", defaultValue="24") Integer linesPerPage,
+			@RequestParam(value="orderBy", defaultValue="nome") String orderBy,
+			@RequestParam(value="direction", defaultValue="ASC") String direction) {
+		Page<Pessoa> list = pessoaService.listarPessoas(page, linesPerPage, orderBy, direction);
+		Page<PessoaDTO> listDTO = list.map(obj -> new PessoaDTO(obj));
+		
+		return ResponseEntity.ok().body(listDTO);
 	}
 	
 }
