@@ -3,10 +3,12 @@ package com.rodrigo.doador.services;
 import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.stereotype.Service;
 
 import com.rodrigo.doador.domain.Pessoa;
 import com.rodrigo.doador.repositories.PessoaRepository;
+import com.rodrigo.doador.services.exceptions.DataIntegrityException;
 import com.rodrigo.doador.services.exceptions.ObjectNotFoundException;
 
 @Service
@@ -29,6 +31,11 @@ public class PessoaService {
 	}
 	public void deletarPessoa(Integer id) {
 		buscarPessoa(id);
-		pessoaRepository.deleteById(id);
+		try {
+			pessoaRepository.deleteById(id);			
+		}
+		catch (DataIntegrityViolationException e) {
+			throw new DataIntegrityException("Não é possivel excluir uma Pessoa que possui utensilios");
+		}
 	}
 }
