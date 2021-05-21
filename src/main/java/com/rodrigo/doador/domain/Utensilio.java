@@ -8,6 +8,9 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
+import javax.validation.constraints.NotEmpty;
+
+import org.hibernate.validator.constraints.Length;
 
 import com.fasterxml.jackson.annotation.JsonBackReference;
 import com.fasterxml.jackson.annotation.JsonIgnore;
@@ -19,11 +22,14 @@ public class Utensilio implements Serializable {
 	@Id
 	@GeneratedValue(strategy=GenerationType.IDENTITY)
 	private Integer id;
+	
+	@NotEmpty(message="Preenchimento obrigatório!")
 	private String nome;
+	
 	private String descricao;
+	
 	private Boolean disponivel;
 	
-	@JsonIgnore
 	@ManyToOne
 	@JoinColumn(name="pessoa_id") // ID DA PESSOA DOADORA
 	private Pessoa pessoa;
