@@ -1,5 +1,6 @@
 package com.rodrigo.doador.services;
 
+import java.util.List;
 import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -41,6 +42,9 @@ public class PessoaService {
 		catch (DataIntegrityViolationException e) {
 			throw new DataIntegrityException("Não é possivel excluir uma Pessoa que possui utensilios");
 		}
+	}
+	public List<Pessoa> listarTodasPessoas(){
+		return pessoaRepository.findAll();
 	}
 	public Page<Pessoa> listarPessoas(Integer page, Integer linesPerPage, String orderBy, String direction){
 		PageRequest pageRequest = PageRequest.of(page, linesPerPage,Direction.valueOf(direction), orderBy);

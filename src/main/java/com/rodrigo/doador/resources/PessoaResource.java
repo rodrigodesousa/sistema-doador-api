@@ -1,6 +1,8 @@
 package com.rodrigo.doador.resources;
 
 import java.net.URI;
+import java.util.List;
+import java.util.stream.Collectors;
 
 import javax.validation.Valid;
 
@@ -66,6 +68,14 @@ public class PessoaResource {
 		Page<PessoaDTO> listDTO = list.map(obj -> new PessoaDTO(obj));
 		
 		return ResponseEntity.ok().body(listDTO);
+	}
+	@RequestMapping(value="all", method=RequestMethod.GET)
+	public ResponseEntity<List<PessoaDTO>> listarTodasPessoas() {
+		
+		List<Pessoa> list = pessoaService.listarTodasPessoas();
+		List<PessoaDTO> listDto = list.stream().map(obj -> new PessoaDTO(obj)).collect(Collectors.toList());
+		return ResponseEntity.ok().body(listDto);
+		
 	}
 	
 }
