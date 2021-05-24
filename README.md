@@ -18,7 +18,8 @@ spring.datasource.password=[SENHA_DO_BANCO]
 ```
 ## Utilizar IDE Eclipse ou Intellij para executar projeto ou as linhas de comando abaixo
 
-## Instalação de dependencias```
+## Instalação de dependencias
+```
 mvn install
 ```
 ## Executar Projeto
